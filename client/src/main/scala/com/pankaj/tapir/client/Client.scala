@@ -16,7 +16,7 @@ object GetClient extends App {
   println(s"kittens:${kittensResponse.body}")
 }
 
-object ClientPost extends App {
+object PostClient extends App {
   private val kittenPostRequest: Kitten => Request[DecodeResult[Either[(StatusCode, ErrorResponse), (StatusCode, Kitten)]], Any] =
     SttpClientInterpreter().toRequest(AnimalEndpoints.kittenPost, Some(uri"http://localhost:8080"))
 
