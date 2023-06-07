@@ -15,7 +15,7 @@ import sttp.tapir.{AnyEndpoint, PublicEndpoint, endpoint, query, stringBody}
 
 import scala.concurrent.ExecutionContext
 
-object KittenHtt4sServer extends IOApp {
+object KittenHttp4sServer extends IOApp {
   // the endpoint: single fixed path input ("hello"), single query parameter
   // corresponds to: GET /hello?name=...
   private val helloWorld: PublicEndpoint[String, Unit, String, Any] =
