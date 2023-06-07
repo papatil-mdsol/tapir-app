@@ -26,7 +26,5 @@ lazy val server = (project in file("server"))
     "org.http4s" %% "http4s-dsl" % http4sVersion,
     "com.softwaremill.sttp.tapir" %% "tapir-openapi-docs" % "1.2.10",
     "com.softwaremill.sttp.tapir" %% "tapir-openapi-circe-yaml" % "0.20.2",
-    "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-http4s" % "0.18.3",
-    "com.softwaremill.sttp.tapir" %% "tapir-redoc-http4s" % "0.18.3",
-    "com.softwaremill.sttp.shared" %% "http4s" % http4sVersion
+    "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-http4s" % "0.18.3"
   ))

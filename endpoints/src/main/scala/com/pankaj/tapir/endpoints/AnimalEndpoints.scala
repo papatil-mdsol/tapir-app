@@ -62,4 +62,13 @@ object AnimalEndpoints {
     .errorOut(jsonBody[ErrorResponse])
     .out(statusCode)
     .out(jsonBody[Kitten])
+
+  val kittensDeleteWithBody: Endpoint[Unit, Kitten, (StatusCode, ErrorResponse), (StatusCode, Kitten), Any] = endpoint
+    .delete
+    .in("kitten")
+    .in(jsonBody[Kitten])
+    .errorOut(statusCode)
+    .errorOut(jsonBody[ErrorResponse])
+    .out(statusCode)
+    .out(jsonBody[Kitten])
 }

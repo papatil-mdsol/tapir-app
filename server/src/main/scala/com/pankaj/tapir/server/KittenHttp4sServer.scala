@@ -64,7 +64,17 @@ object KittenHttp4sServer extends IOApp {
     })
   )
 
-  private val endpointsForDocs = List(helloWorld, AnimalEndpoints.kittens, AnimalEndpoints.kittenPost, AnimalEndpoints.kittensPut, AnimalEndpoints.kittensDelete, AnimalEndpoints.kittensWithPathParam, AnimalEndpoints.kittensWithQueryParam)
+  private val deleteKittensWithBody = Http4sServerInterpreter[IO]().toRoutes(
+    AnimalEndpoints.kittensDeleteWithBody.serverLogic(kitten => {
+      val deletedKittenOpt = DB.kittens.find(_.id == kitten.id)
+      deletedKittenOpt.map(deletedKitten => {
+        DB.kittens = DB.kittens.filterNot(_.id == deletedKitten.id)
+        IO(Right(StatusCode.Ok -> deletedKitten))
+      }).getOrElse(IO(Left(StatusCode.NotFound -> ErrorResponse(s"kitten with id ${kitten.id} was not found"))))
+    })
+  )
+
+  private val endpointsForDocs = List(helloWorld, AnimalEndpoints.kittens, AnimalEndpoints.kittenPost, AnimalEndpoints.kittensPut, AnimalEndpoints.kittensDelete, AnimalEndpoints.kittensWithPathParam, AnimalEndpoints.kittensWithQueryParam, AnimalEndpoints.kittensDeleteWithBody)
 
   def withSwaggerDocs(endpoints: List[AnyEndpoint]): HttpRoutes[IO] = {
     Http4sServerInterpreter[IO]().toRoutes(SwaggerInterpreter().fromEndpoints[IO](endpoints, "Kittens", "1.0"))
@@ -78,7 +88,7 @@ object KittenHttp4sServer extends IOApp {
       .default[IO]
       .withHost(ipv4"0.0.0.0")
       .withPort(port"8080")
-      .withHttpApp(Router("/" -> hello, "/" -> getKitten, "/" -> postKittens, "/" -> putKittens, "/" -> deleteKittens, "/" -> withSwaggerDocs(endpointsForDocs)).orNotFound)
+      .withHttpApp(Router("/" -> hello, "/" -> getKitten, "/" -> postKittens, "/" -> putKittens, "/" -> deleteKittens, "/" -> deleteKittensWithBody, "/" -> withSwaggerDocs(endpointsForDocs)).orNotFound)
       .build
       .use(_ => IO.never)
       .as(ExitCode.Success)
