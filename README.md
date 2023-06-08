@@ -6,7 +6,8 @@
 4. Open the browser and goto [http://localhost:8080/docs](http://localhost:8080/docs/)
 5. Explore each endpoint using swagger-ui
 6. Also in client module GetClient and PostClient can be executed to invoke the Get and Post endpoints respectively.
-7. Citations: 1. https://www.baeldung.com/scala/tapir
-              2. https://tapir.softwaremill.com/en/latest/index.html
-              3. https://http4s.org/
+7. References: 
+   1. https://www.baeldung.com/scala/tapir
+   2. https://tapir.softwaremill.com/en/latest/index.html
+   3. https://http4s.org/
         
