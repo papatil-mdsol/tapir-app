@@ -12,6 +12,7 @@ import sttp.model.StatusCode
 import sttp.tapir.server.http4s.Http4sServerInterpreter
 import sttp.tapir.swagger.bundle.SwaggerInterpreter
 import sttp.tapir.{AnyEndpoint, PublicEndpoint, endpoint, query, stringBody}
+import java.io.{PrintWriter, File}
 
 import scala.concurrent.ExecutionContext
 
@@ -83,6 +84,15 @@ object KittenHttp4sServer extends IOApp {
   implicit val ec: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
 
   override def run(args: List[String]): IO[ExitCode] = {
+    import sttp.apispec.openapi.circe.yaml._
+    import sttp.tapir.docs.openapi.OpenAPIDocsInterpreter
+
+    val docs = OpenAPIDocsInterpreter().toOpenAPI(endpointsForDocs, "Kittens", "1.0")
+    val file = new File("docs/openapi.yaml")
+    val pw = new PrintWriter(file)
+    pw.write(docs.toYaml)
+    pw.close()
+
     // starting the server
     EmberServerBuilder
       .default[IO]
