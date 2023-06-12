@@ -8,7 +8,7 @@ import sttp.tapir.server.akkahttp.AkkaHttpServerInterpreter
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-object KittenServer extends App with BaseAkkaServer {
+object KittenAkkaServer extends App with BaseAkkaServer {
 
 
   private val getKittens = AkkaHttpServerInterpreter()
