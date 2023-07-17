@@ -27,3 +27,11 @@ lazy val server = (project in file("server"))
     "com.softwaremill.sttp.apispec" %% "openapi-circe-yaml" % "0.4.0",
     "com.softwaremill.sttp.tapir" %% "tapir-openapi-docs" % tapirVersion
   ))
+libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.16"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.16" % "test"
+
+sonarUseExternalConfig := true
+scapegoatVersion in ThisBuild := "1.3.9"
+scapegoatReports := Seq("xml")
+
+scalacOptions in Scapegoat += "-P:scapegoat:overrideLevels:all=Warning"
